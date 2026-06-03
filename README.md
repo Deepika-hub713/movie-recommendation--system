@@ -30,3 +30,27 @@ It recommends similar movies based on genres, cast, crew, and keywords.
 ---
 
 ## 🎯 Example API
+/recommend?movie=Avatar
+
+
+---
+
+## 🎬 Features
+- Movie recommendation engine  
+- Machine learning-based similarity  
+- REST API using Flask  
+- Docker deployment  
+- Hosted on Render  
+
+---
+
+## 🚀 Deployment
+Deployed using:
+- GitHub  
+- Docker  
+- Render  
+
+---
+
+## 👩‍💻 Author
+Deepika-hub713
