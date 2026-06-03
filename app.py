@@ -4,22 +4,14 @@ import os
 
 app = Flask(__name__)
 
-# Load saved files
+# Load files
 movies = pickle.load(open("movies.pkl", "rb"))
-similarity = pickle.load(open("similarity.pkl", "rb"))
+recommendations = pickle.load(open("recommendations.pkl", "rb"))
 
 # Recommendation function
 def recommend(movie):
     index = movies[movies['title'] == movie].index[0]
-    distances = similarity[index]
-
-    movies_list = sorted(
-        list(enumerate(distances)),
-        reverse=True,
-        key=lambda x: x[1]
-    )[1:6]
-
-    return [movies.iloc[i[0]].title for i in movies_list]
+    return recommendations[index]
 
 # Home route
 @app.route("/")
@@ -30,7 +22,15 @@ def home():
 @app.route("/recommend")
 def recommend_api():
     movie = request.args.get("movie")
-    return jsonify(recommend(movie))
+
+    if movie is None:
+        return jsonify({"error": "Please provide a movie name"}), 400
+
+    try:
+        result = recommend(movie)
+        return jsonify(result)
+    except:
+        return jsonify({"error": "Movie not found"}), 404
 
 # Run app (IMPORTANT for Render)
 if __name__ == "__main__":
